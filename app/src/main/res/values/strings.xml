@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">ActivityResultApiSampleApp</string>
+    <string name="app_name">ActivityResultApiSample</string>
+    <string name="btn_simple_start_activity_for_result">Simple Start Activity for Result</string>
+    <string name="btn_simple_start_activity_for_result_two">Simple Start Activity for Result two</string>
+    <string name="btn_simple_start_activity_for_result_three">Simple Start Activity for Result three</string>
+    <string name="btn_go_back_with_result">Go Back with Result</string>
+    <string name="btn_go_back_without_result">go back without result</string>
+    <string name="btn_simple_custom_contract">Simple Custom Contract</string>
+    <string name="heading_message">Message</string>
+    <string name="btn_save">save</string>
+    <string name="btn_multiple_input_custom_contract">Multiple Input Custom Contract</string>
+    <string name="btn_request_single_permission">Request Single Permission</string>
+    <string name="btn_request_multiple_permission">Request Multiple Permission</string>
+    <string name="btn_request_single_dangerous_permission">Request Single dangerous Permission</string>
+    <string name="need_permission_title">Need permission</string>
+    <string name="need_permission_explanation">Permission is required for proper use</string>
+    <string name="btn_take_picture">Take Picture</string>
+    <string name="btn_take_picture_preview">take picture preview</string>
+    <string name="btn_pick_contact">Pick Contact</string>
+    <string name="btn_pick_content">Pick Content</string>
+    <string name="btn_pick_multiple_content">pick multiple content</string>
+    <string name="selected_content">Selected content</string>
+    <string name="btn_launch_app_setting">launch app setting</string>
+    <string name="btn_create_document">Create Document</string>
+    <string name="btn_open_document">Open Document</string>
+    <string name="btn_open_multiple_document">Open multiple document</string>
+    <string name="btn_open_document_tree">Open document tree</string>
+    <string name="documents">documents</string>
+
+    <string name="permission_camera_title_denied">" Access to the camera is prohibited…"</string>
+    <string name="permission_camera_message_denied">" The application needs access to the camera to take photos. \n Please provide access to the settings menu."</string>
+    <string name="btn_dialog_setting">Settings</string>
+    <string name="permission_camera_rationale_title">Allow access to the camera</string>
+    <string name="permission_camera_rationale_text">The application requires access to the camera to take photos.\n You can revoke access through the settings menu at any time.</string>
+    <string name="camera_rationale_button">Allow</string>
+    <string name="denied_toast">Access denied</string>
+    <string name="Camera_Permission_Denied">Camara Permission denied</string>
+    <string name="Camera_permission_granted">camara Permission Granted</string>
+    <string name="btn_open_camera">Open Camera</string>
+    <string name="btn_start_simple_activity">Start Simple Activity</string>
 </resources>
