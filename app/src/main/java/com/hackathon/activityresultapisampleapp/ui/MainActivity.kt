@@ -3,12 +3,14 @@ package com.hackathon.activityresultapisampleapp.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.OpenableColumns
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -21,6 +23,7 @@ import androidx.core.os.bundleOf
 import androidx.documentfile.provider.DocumentFile
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.hackathon.activityresultapisampleapp.ui.SimpleActivity.Companion.EXTRA_MESSAGE
 import com.hackathon.activityresultapisampleapp.ui.SimpleActivityThree.Companion.EXTRA_RESULT_ONE
 import com.hackathon.activityresultapisampleapp.ui.SimpleActivityThree.Companion.EXTRA_RESULT_TWO
@@ -34,6 +37,8 @@ import com.hackathon.activityresultapisampleapp.utils.extensions.showPermissionR
 import com.hackathon.activityresultapisampleapp.utils.extensions.showToast
 import com.hackathon.activityresultapisampleapp.R
 import com.hackathon.activityresultapisampleapp.databinding.ActivityMainBinding
+import com.hackathon.activityresultapisampleapp.utils.extensions.checkPermission
+import com.hackathon.activityresultapisampleapp.utils.sendNotification
 
 /**
  * @Author: Anurag Kumar kachhala
@@ -292,8 +297,25 @@ class MainActivity : AppCompatActivity() {
                 val names = documentFile.listFiles().map { it.name.orEmpty() }
                 showItems(R.string.documents, names)
             }
-
         }
+
+    // Notification permission for Android 13 and above
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission is granted. Continue the action or workflow in your
+            // app.
+            sendNotification(this)
+        } else {
+            // Explain to the user that the feature is unavailable because the
+            // features requires a permission that the user has denied. At the
+            // same time, respect the user's decision. Don't link to system
+            // settings in an effort to convince the user to change their
+            // decision.
+        }
+    }
+
 
     private var launcher: ActivityResultLauncher<Uri?>? = null
 
@@ -385,6 +407,10 @@ class MainActivity : AppCompatActivity() {
 
             btnOpenDocumentTree.setOnClickListener {
                 openDocumentTree()
+            }
+
+            btnRequestNotification.setOnClickListener {
+                requestPermissionForNotification()
             }
 
         }
@@ -582,8 +608,49 @@ class MainActivity : AppCompatActivity() {
         openDocumentLauncher.launch(arrayOf("application/*"))
     }
 
+    private fun requestPermissionForNotification(){
+        when {
+            checkPermission(POST_NOTIFICATION_PERMISSION) -> {
+                // You can use the API that requires the permission.
+                Log.e(TAG, "onCreate: PERMISSION GRANTED")
+                sendNotification(this)
+            }
+            shouldShowRequestPermissionRationale(POST_NOTIFICATION_PERMISSION) -> {
+                Snackbar.make(
+                    findViewById(R.id.parent_layout),
+                    "Notification blocked",
+                    Snackbar.LENGTH_LONG
+                ).setAction("Settings") {
+                    // Responds to click on the action
+                   /* val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val uri: Uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)*/
+                    launchAppDetailsSetting.launch(Unit)
+                }.show()
+            }
+            else -> {
+                // The registered ActivityResultCallback gets the result of this request
+                requestNotificationPermissionLauncher.launch(
+                    POST_NOTIFICATION_PERMISSION
+                )
+            }
+        }
+    }
+
     companion object {
         private const val CAMARA_PERMISSION = Manifest.permission.CAMERA
+      //  @RequiresApi(33)
+       // private const val POST_NOTIFICATION_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
+      private const val POST_NOTIFICATION_PERMISSION = Manifest.permission.CAMERA
+        const val TAG = "MainActivity"
+        private const val NOTIFICATION_MESSAGE_TAG = "message from notification"
+        fun newIntent(context: Context) = Intent(context, MainActivity::class.java).apply {
+            putExtra(
+                NOTIFICATION_MESSAGE_TAG, "Hi ☕\uD83C\uDF77\uD83C\uDF70"
+            )
+        }
     }
 
 

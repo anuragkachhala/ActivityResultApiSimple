@@ -38,4 +38,5 @@
     <string name="Camera_permission_granted">camara Permission Granted</string>
     <string name="btn_open_camera">Open Camera</string>
     <string name="btn_start_simple_activity">Start Simple Activity</string>
+    <string name="btn_request_for_notification">Request for Notification</string>
 </resources>

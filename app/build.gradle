@@ -5,11 +5,13 @@ plugins {
 
 android {
     compileSdk 32
+    //compileSdkPreview "Tiramisu"
 
     defaultConfig {
         applicationId "com.hackathon.activityresultapisampleapp"
         minSdk 21
         targetSdk 32
+        //targetSdkPreview "Tiramisu"
         versionCode 1
         versionName "1.0"
 
